@@ -20,6 +20,7 @@ async function run(){
 
         const productCollection = client.db('manufacturer-website').collection('products');
         const reviewsCollection = client.db('manufacturer-website').collection('reviews');
+        const usersCollection = client.db('manufacturer-website').collection('users');
 
         app.get('/reviews', async (req, res) =>{
             const query = {};
@@ -40,6 +41,12 @@ async function run(){
         app.post('/products', async (req, res) =>{
             const product = req.body;
             const result = await productCollection.insertOne(product);
+            res.send(result);
+        })
+
+        app.get('/users', async (req, res) =>{
+            const query = {};
+            const result = await usersCollection.find(query).toArray();
             res.send(result);
         })
     }
