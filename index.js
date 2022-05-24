@@ -49,6 +49,17 @@ async function run(){
             const result = await usersCollection.find(query).toArray();
             res.send(result);
         })
+        app.post('/users/:eamil', async (req, res) =>{
+            const email = req.params.email;
+            const user = req.body;
+            const filter = {email : email};
+            const options = {upsert: true};
+            const updadedDoc = {
+                $set : user
+            }
+            const result = await usersCollection.updateOne(filter, updadedDoc, options);
+            res.send(result);
+        })
     }
     finally{
 
