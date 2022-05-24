@@ -49,7 +49,7 @@ async function run(){
             const result = await usersCollection.find(query).toArray();
             res.send(result);
         })
-        app.post('/users/:eamil', async (req, res) =>{
+        app.put('/users/:eamil', async (req, res) =>{
             const email = req.params.email;
             const user = req.body;
             const filter = {email : email};
