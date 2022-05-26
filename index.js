@@ -79,6 +79,11 @@ async function run(){
             const result = await ordersCollection.find(filter).toArray();
             res.send(result);
         })
+        app.get('/allorders', async (req, res) =>{
+            const filter = {};
+            const result = await ordersCollection.find(filter).toArray();
+            res.send(result);
+        })
         app.post('/orders', async (req, res) =>{
             const order = req.body;
             console.log(order)
