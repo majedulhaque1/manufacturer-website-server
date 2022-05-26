@@ -72,6 +72,16 @@ async function run(){
             const result = await productCollection.insertOne(product);
             res.send(result);
         })
+        app.get('/profile', async (req, res) =>{
+            const query = {};
+            const result = await productCollection.find(query);
+            res.send(result);
+        })
+        app.post('/profile', async (req, res) =>{
+            const product = req.body;
+            const result = await productCollection.insertOne(product);
+            res.send(result);
+        })
         app.get('/orders', verifyJWT, async (req, res) =>{
             const buyer = req.query.buyer;
             const filter = {email: buyer};
