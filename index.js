@@ -38,6 +38,7 @@ async function run(){
         const reviewsCollection = client.db('manufacturer-website').collection('reviews');
         const usersCollection = client.db('manufacturer-website').collection('users');
         const ordersCollection = client.db('manufacturer-website').collection('orders');
+        const profilesCollection = client.db('manufacturer-website').collection('profiless');
         
         app.get('/reviews', async (req, res) =>{
             const query = {};
@@ -74,12 +75,12 @@ async function run(){
         })
         app.get('/profile', async (req, res) =>{
             const query = {};
-            const result = await productCollection.find(query);
+            const result = await profilesCollection.find(query);
             res.send(result);
         })
         app.post('/profile', async (req, res) =>{
-            const product = req.body;
-            const result = await productCollection.insertOne(product);
+            const info = req.body;
+            const result = await profilesCollection.insertOne(info);
             res.send(result);
         })
         app.get('/orders', verifyJWT, async (req, res) =>{
@@ -105,6 +106,12 @@ async function run(){
             const query = {};
             const result = await usersCollection.find(query).toArray();
             res.send(result);
+        })
+        app.get('/admin/:email',async (req, res) =>{
+            const email = req.params.email;
+            const user = await usersCollection.findOne({email : email});
+            const isAdmin = user.role === 'admin';
+            res.send({admin: isAdmin});
         })
         app.patch('/users/admin/:email', verifyJWT, async (req, res) =>{
             const email = req.params.email;
